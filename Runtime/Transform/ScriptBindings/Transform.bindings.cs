@@ -41,22 +41,22 @@ namespace UnityEngine
         // 该物体在世界坐标系中的旋转角度
         public Vector3 eulerAngles { get { return rotation.eulerAngles; } set { rotation = Quaternion.Euler(value); } }
 
-        // The rotation as Euler angles in degrees relative to the parent transform's rotation.
+        // 该物体相对于父物体为坐标原点的旋转角度，该数值对应inspector面板Rotation数值
         public Vector3 localEulerAngles { get { return localRotation.eulerAngles; } set { localRotation = Quaternion.Euler(value); } }
 
-        // The red axis of the transform in world space.
+        // 在世界坐标系中红色坐标轴所对应的方向
         public Vector3 right { get { return rotation * Vector3.right; } set { rotation = Quaternion.FromToRotation(Vector3.right, value); } }
 
-        // The green axis of the transform in world space.
+        // 在世界坐标系中绿色轴所对应的方向
         public Vector3 up { get { return rotation * Vector3.up; } set { rotation = Quaternion.FromToRotation(Vector3.up, value); } }
 
-        // The blue axis of the transform in world space.
+        // 在世界坐标系中蓝色轴所对应的方向
         public Vector3 forward { get { return rotation * Vector3.forward; } set { rotation = Quaternion.LookRotation(value); } }
 
-        // The rotation of the transform in world space stored as a [[Quaternion]].
+        // 该物体在世界坐标系中旋转所对应的四元数
         public extern Quaternion rotation { get; set; }
 
-        // The rotation of the transform relative to the parent transform's rotation.
+        // 该物体在父物体坐标系旋转所对应的四元数
         public extern Quaternion localRotation { get; set; }
 
         // The euler rotation order for this transform
@@ -74,10 +74,10 @@ namespace UnityEngine
         [NativeMethod("SetRotationOrder")]
         internal extern void SetRotationOrderInternal(RotationOrder rotationOrder);
 
-        // The scale of the transform relative to the parent.
+        // 该物体对应父物体坐标系的缩放值
         public extern Vector3 localScale { get; set; }
 
-        // The parent of the transform.
+        // 该物体的父物体的Transform
         public Transform parent
         {
             get { return parentInternal; }
@@ -96,7 +96,7 @@ namespace UnityEngine
         }
 
         private extern Transform GetParent();
-
+        //将该物体设为参数p的子物体
         public void SetParent(Transform p)
         {
             SetParent(p, true);
@@ -110,10 +110,10 @@ namespace UnityEngine
         // Matrix that transforms a point from local space into world space (RO).
         public extern Matrix4x4 localToWorldMatrix { get; }
 
-        // Set position and rotation in world space
+        //设置该物体在世界坐标系中的位置和旋转（四元数）
         public extern void SetPositionAndRotation(Vector3 position, Quaternion rotation);
 
-        // Moves the transform in the direction and distance of /translation/.
+        // 将该物体的位置移动translation 向量的位置
         public void Translate(Vector3 translation, [UnityEngine.Internal.DefaultValue("Space.Self")] Space relativeTo)
         {
             if (relativeTo == Space.World)
@@ -127,7 +127,7 @@ namespace UnityEngine
             Translate(translation, Space.Self);
         }
 
-        // Moves the transform by /x/ along the x axis, /y/ along the y axis, and /z/ along the z axis.
+        // 通过三个轴向的数值把该物体进行移动一定的距离
         public void Translate(float x, float y, float z, [UnityEngine.Internal.DefaultValue("Space.Self")] Space relativeTo)
         {
             Translate(new Vector3(x, y, z), relativeTo);
@@ -138,7 +138,7 @@ namespace UnityEngine
             Translate(new Vector3(x, y, z), Space.Self);
         }
 
-        // Moves the transform in the direction and distance of /translation/.
+        // 相对于某个物体方向上，移动该物体.
         public void Translate(Vector3 translation, Transform relativeTo)
         {
             if (relativeTo)
@@ -147,13 +147,13 @@ namespace UnityEngine
                 position += translation;
         }
 
-        // Moves the transform by /x/ along the x axis, /y/ along the y axis, and /z/ along the z axis.
+        // 通过三个轴向的大小移动相对于物体的距离
         public void Translate(float x, float y, float z, Transform relativeTo)
         {
             Translate(new Vector3(x, y, z), relativeTo);
         }
 
-        // Applies a rotation of /eulerAngles.z/ degrees around the z axis, /eulerAngles.x/ degrees around the x axis, and /eulerAngles.y/ degrees around the y axis (in that order).
+        // 相对与自身坐标，该物体在三个轴向上旋转某个角度
         public void Rotate(Vector3 eulers, [UnityEngine.Internal.DefaultValue("Space.Self")] Space relativeTo)
         {
             Quaternion eulerRot = Quaternion.Euler(eulers.x, eulers.y, eulers.z);
@@ -164,18 +164,18 @@ namespace UnityEngine
                 rotation = rotation * (Quaternion.Inverse(rotation) * eulerRot * rotation);
             }
         }
-
+        //相对于自身的坐标，该物体旋转某个向量
         public void Rotate(Vector3 eulers)
         {
             Rotate(eulers, Space.Self);
         }
 
-        // Applies a rotation of /zAngle/ degrees around the z axis, /xAngle/ degrees around the x axis, and /yAngle/ degrees around the y axis (in that order).
+        // 通过三个轴向的大小，该物体旋转某个角度
         public void Rotate(float xAngle, float yAngle, float zAngle, [UnityEngine.Internal.DefaultValue("Space.Self")] Space relativeTo)
         {
             Rotate(new Vector3(xAngle, yAngle, zAngle), relativeTo);
         }
-
+        // 通过三个轴向的大小，该物体旋转某个角度
         public void Rotate(float xAngle, float yAngle, float zAngle)
         {
             Rotate(new Vector3(xAngle, yAngle, zAngle), Space.Self);
