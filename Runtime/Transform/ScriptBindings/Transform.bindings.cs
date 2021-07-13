@@ -22,7 +22,7 @@ namespace UnityEngine
     {
         protected Transform() {}
 
-        // The position of the transform in world space.
+        // 该物体相对于父物体为坐标原点的坐标
         public extern Vector3 position { get; set; }
 
         // Position of the transform relative to the parent transform.
