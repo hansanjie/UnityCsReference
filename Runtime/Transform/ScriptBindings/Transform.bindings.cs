@@ -184,7 +184,7 @@ namespace UnityEngine
         [NativeMethod("RotateAround")]
         internal extern void RotateAroundInternal(Vector3 axis, float angle);
 
-        // Rotates the transform around /axis/ by /angle/ degrees.
+        // 该物体在某个轴向上，旋转某个角度
         public void Rotate(Vector3 axis, float angle, [UnityEngine.Internal.DefaultValue("Space.Self")] Space relativeTo)
         {
             if (relativeTo == Space.Self)
@@ -192,13 +192,13 @@ namespace UnityEngine
             else
                 RotateAroundInternal(axis, angle * Mathf.Deg2Rad);
         }
-
+        // 该物体在某个轴向上，旋转某个角度
         public void Rotate(Vector3 axis, float angle)
         {
             Rotate(axis, angle, Space.Self);
         }
 
-        // Rotates the transform about /axis/ passing through /point/ in world coordinates by /angle/ degrees.
+        // 该物体围绕某个点，在某个轴向上，旋转一定的角度
         public void RotateAround(Vector3 point, Vector3 axis, float angle)
         {
             Vector3 worldPos = position;
@@ -210,11 +210,11 @@ namespace UnityEngine
             RotateAroundInternal(axis, angle * Mathf.Deg2Rad);
         }
 
-        // Rotates the transform so the forward vector points at /target/'s current position.
+        // 通过旋转，物体的蓝色坐标轴指向某个物体
         public void LookAt(Transform target, [UnityEngine.Internal.DefaultValue("Vector3.up")] Vector3 worldUp) { if (target) LookAt(target.position, worldUp); }
         public void LookAt(Transform target) { if (target) LookAt(target.position, Vector3.up); }
 
-        // Rotates the transform so the forward vector points at /worldPosition/.
+        // 通过旋转，物体的蓝色坐标轴指向世界坐标系中的点
         public void LookAt(Vector3 worldPosition, [UnityEngine.Internal.DefaultValue("Vector3.up")] Vector3 worldUp) { Internal_LookAt(worldPosition, worldUp); }
         public void LookAt(Vector3 worldPosition) { Internal_LookAt(worldPosition, Vector3.up); }
 
@@ -247,24 +247,24 @@ namespace UnityEngine
         public Vector3 InverseTransformVector(float x, float y, float z) { return InverseTransformVector(new Vector3(x, y, z)); }
 
 
-        // Transforms /position/ from local space to world space.
+        // 将该物体本地坐标的点转化成世界坐标
         public extern Vector3 TransformPoint(Vector3 position);
 
-        // Transforms the position /x/, /y/, /z/ from local space to world space.
+        // 将该物体本地坐标的X值，Y值，Z值组成的坐标转化成世界坐标
         public Vector3 TransformPoint(float x, float y, float z) { return TransformPoint(new Vector3(x, y, z)); }
 
-        // Transforms /position/ from world space to local space. The opposite of Transform.TransformPoint.
+        // 将世界坐标的点转换成本地坐标
         public extern Vector3 InverseTransformPoint(Vector3 position);
 
-        // Transforms the position /x/, /y/, /z/ from world space to local space. The opposite of Transform.TransformPoint.
+        // 通过世界坐标的X,Y,Z组成的点转换成本地坐标
         public Vector3 InverseTransformPoint(float x, float y, float z) { return InverseTransformPoint(new Vector3(x, y, z)); }
 
-        // Returns the topmost transform in the hierarchy.
+        // 获得Herachy面板是该物体最上层的物体的Transform
         public Transform root { get { return GetRoot(); } }
 
         private extern Transform GetRoot();
 
-        // The number of children the Transform has.
+        // 获得该物体子物体的数量
         public extern int childCount
         {
             [NativeMethod("GetChildrenCount")]
@@ -275,23 +275,23 @@ namespace UnityEngine
         [FreeFunction("DetachChildren", HasExplicitThis = true)]
         public extern void DetachChildren();
 
-        // Move itself to the end of the parent's array of children
+        // 将该物体移动到父物体最上面的子物体的位置
         public extern void SetAsFirstSibling();
 
-        // Move itself to the beginning of the parent's array of children
+        // 将该物体移动到父物体最下面的子物体的位置
         public extern void SetAsLastSibling();
-
+        // 将该物体移动到父物体某个子物体的位置
         public extern void SetSiblingIndex(int index);
 
         [NativeMethod("MoveAfterSiblingInternal")]
         internal extern void MoveAfterSibling(Transform transform, bool notifyEditorAndMarkDirty);
-
+        //获得该物体在父物体中的子物体序列的序号
         public extern int GetSiblingIndex();
 
         [FreeFunction]
         private static extern Transform FindRelativeTransformWithPath(Transform transform, string path, [UnityEngine.Internal.DefaultValue("false")] bool isActiveOnly);
 
-        // Finds a child by /name/ and returns it.
+        //通过名称查找Hierarchy面板中Transform
         public Transform Find(string n)
         {
             if (n == null)
@@ -303,14 +303,14 @@ namespace UnityEngine
         [NativeConditional("UNITY_EDITOR")]
         internal extern void SendTransformChangedScale();
 
-        // The global scale of the object (RO).
+        // 获得该物体在世界坐标系中的缩放值
         public extern Vector3 lossyScale
         {
             [NativeMethod("GetWorldScaleLossy")]
             get;
         }
 
-        // Is this transform a child of /parent/?
+        // 返回该物体是否是某个Transfrom 的子物体
         [FreeFunction("Internal_IsChildOrSameTransform", HasExplicitThis = true)]
         public extern bool IsChildOf([NotNull] Transform parent);
 
