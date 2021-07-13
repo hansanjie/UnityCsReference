@@ -22,10 +22,10 @@ namespace UnityEngine
     {
         protected Transform() {}
 
-        // 该物体相对于父物体为坐标原点的坐标
+        // 该物体相对于世界坐标系坐标原点的坐标
         public extern Vector3 position { get; set; }
 
-        // Position of the transform relative to the parent transform.
+        // 该物体相对于父物体为坐标原点相对应的坐标
         public extern Vector3 localPosition { get; set; }
 
         // Get local euler angles with rotation order specified
@@ -38,7 +38,7 @@ namespace UnityEngine
         [NativeConditional("UNITY_EDITOR")]
         internal extern void SetLocalEulerHint(Vector3 euler);
 
-        // The rotation as Euler angles in degrees.
+        // 该物体在世界坐标系中的旋转角度
         public Vector3 eulerAngles { get { return rotation.eulerAngles; } set { rotation = Quaternion.Euler(value); } }
 
         // The rotation as Euler angles in degrees relative to the parent transform's rotation.
